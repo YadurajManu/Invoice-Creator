@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Plus, Trash2, Eye, Download } from "lucide-react";
+import { Plus, Trash2, Eye, Download, Sparkles } from "lucide-react";
 import InvoicePreview from "./invoice-preview";
 import { generateInvoicePDF } from "@/lib/pdf-generator";
 
@@ -60,8 +60,8 @@ export default function InvoiceGenerator() {
     },
   });
 
-  const handlePreview = () => {
-    const isValid = form.trigger();
+  const handlePreview = async () => {
+    const isValid = await form.trigger();
     if (isValid) {
       setPreviewData(form.getValues());
     }
@@ -103,56 +103,111 @@ export default function InvoiceGenerator() {
   const watchedValues = form.watch();
 
   return (
-    <section id="generator" className="py-20 bg-gradient-to-br from-slate-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4">Create Your Invoice</h2>
-          <p className="text-xl text-slate-600">Fill in the details below and generate your professional invoice instantly</p>
+    <section id="generator" className="py-32 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 gradient-surface"></div>
+      
+      {/* Decorative elements */}
+      <div className="absolute top-20 right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 left-10 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 animate-scale-in">
+            <Sparkles size={16} />
+            <span>Invoice Generator</span>
+          </div>
+          
+          <h2 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6 animate-slide-up-fade">
+            Create Your
+            <span className="block text-gradient">Perfect Invoice</span>
+          </h2>
+          
+          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed animate-slide-up-fade" style={{ animationDelay: '0.2s' }}>
+            Fill in the details below and watch your professional invoice come to life in real-time
+          </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Invoice Form */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-            <h3 className="text-2xl font-semibold text-slate-800 mb-8">Invoice Details</h3>
+        <div className="grid xl:grid-cols-2 gap-12 items-start">
+          {/* Enhanced Invoice Form */}
+          <div className="space-y-8 animate-slide-up-fade" style={{ animationDelay: '0.4s' }}>
+            <div className="bg-white rounded-3xl shadow-luxury p-8 border border-slate-200/50">
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-2xl font-bold text-slate-900">Invoice Details</h3>
+                <div className="flex items-center gap-2 text-sm text-slate-500">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span>Real-time preview</span>
+                </div>
+              </div>
             
             <Form {...form}>
               <form className="space-y-6">
-                {/* Business Information */}
-                <div className="grid md:grid-cols-2 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="businessName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium text-slate-700">Your Name/Business</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            placeholder="John Doe Design Studio" 
-                            className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="invoiceNumber"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-sm font-medium text-slate-700">Invoice Number</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            placeholder="INV-2024-001" 
-                            className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                {/* Business Information Section */}
+                <div className="space-y-6">
+                  <div className="flex items-center gap-3 pb-3 border-b border-slate-200">
+                    <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <span className="text-primary font-bold text-sm">1</span>
+                    </div>
+                    <h4 className="text-lg font-semibold text-slate-900">Business Information</h4>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="businessName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                            Your Name/Business
+                            <span className="text-red-500">*</span>
+                          </FormLabel>
+                          <FormControl>
+                            <div className="relative">
+                              <Input 
+                                {...field} 
+                                placeholder="e.g. John Doe Design Studio" 
+                                className="px-4 py-4 border-2 border-slate-200 rounded-2xl focus:border-primary focus:ring-0 transition-all duration-300 text-slate-900 placeholder:text-slate-400 bg-slate-50 focus:bg-white" 
+                              />
+                              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                                {field.value && (
+                                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                )}
+                              </div>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="invoiceNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                            Invoice Number
+                            <span className="text-red-500">*</span>
+                          </FormLabel>
+                          <FormControl>
+                            <div className="relative">
+                              <Input 
+                                {...field} 
+                                placeholder="e.g. INV-2024-001" 
+                                className="px-4 py-4 border-2 border-slate-200 rounded-2xl focus:border-primary focus:ring-0 transition-all duration-300 text-slate-900 placeholder:text-slate-400 bg-slate-50 focus:bg-white" 
+                              />
+                              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                                {field.value && (
+                                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                )}
+                              </div>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
 
                 {/* Client Information */}
@@ -345,32 +400,35 @@ export default function InvoiceGenerator() {
                 />
 
                 {/* Action Buttons */}
-                <div className="flex gap-4 pt-4">
+                <div className="flex gap-4 pt-8">
                   <Button
                     type="button"
                     variant="secondary"
-                    className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 px-6 rounded-xl font-semibold transition-all duration-300"
+                    className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-4 px-6 rounded-2xl font-semibold transition-all duration-300 hover:shadow-md"
                     onClick={handlePreview}
                   >
-                    <Eye size={16} className="mr-2" />
+                    <Eye size={20} className="mr-2" />
                     Preview
                   </Button>
                   <Button
                     type="button"
-                    className="flex-1 bg-primary hover:bg-indigo-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+                    className="flex-1 button-primary py-4 px-6 rounded-2xl font-semibold transition-all duration-300 hover:shadow-luxury transform hover:scale-[1.02]"
                     onClick={handleGeneratePDF}
                     disabled={createInvoiceMutation.isPending}
                   >
-                    <Download size={16} className="mr-2" />
+                    <Download size={20} className="mr-2" />
                     {createInvoiceMutation.isPending ? "Generating..." : "Generate PDF"}
                   </Button>
                 </div>
               </form>
             </Form>
+            </div>
           </div>
 
-          {/* Invoice Preview */}
-          <InvoicePreview data={previewData || watchedValues} />
+          {/* Enhanced Invoice Preview */}
+          <div className="animate-slide-up-fade" style={{ animationDelay: '0.6s' }}>
+            <InvoicePreview data={previewData || watchedValues} />
+          </div>
         </div>
       </div>
     </section>

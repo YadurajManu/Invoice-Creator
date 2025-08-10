@@ -31,16 +31,16 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
   const hasValidData = data.businessName || data.clientName || (data.items && data.items.length > 0 && data.items[0].description);
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+    <div className="bg-white rounded-3xl shadow-luxury p-8 border border-slate-200/50 sticky top-8">
       <div className="flex items-center justify-between mb-8">
-        <h3 className="text-2xl font-semibold text-slate-800">Live Preview</h3>
+        <h3 className="text-2xl font-bold text-slate-900">Live Preview</h3>
         <div className="flex items-center space-x-2 text-sm text-slate-500">
-          <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-          <span>Real-time updates</span>
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <span>Updates in real-time</span>
         </div>
       </div>
 
-      <div className="border border-gray-200 rounded-xl p-6 bg-gray-50 min-h-[500px]">
+      <div className="border-2 border-slate-200 rounded-2xl p-8 bg-slate-50 min-h-[600px] relative overflow-hidden">
         {!hasValidData ? (
           <div className="text-center text-slate-400 flex items-center justify-center h-full">
             <div>
