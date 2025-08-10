@@ -8,8 +8,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Plus, Trash2, Eye, Download, Sparkles } from "lucide-react";
+import { Plus, Trash2, Eye, Download, Sparkles, Building, User, Calculator, FileText, CreditCard, Percent } from "lucide-react";
 import InvoicePreview from "./invoice-preview";
 import { generateInvoicePDF } from "@/lib/pdf-generator";
 
@@ -20,17 +21,41 @@ export default function InvoiceGenerator() {
   const form = useForm<CreateInvoiceRequest>({
     resolver: zodResolver(createInvoiceSchema),
     defaultValues: {
+      // Business Information
       businessName: "",
+      businessAddress: "",
+      businessPhone: "",
+      businessEmail: "",
+      businessWebsite: "",
+      businessLogo: "",
+      
+      // Invoice Details
       invoiceNumber: `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`,
-      clientName: "",
-      clientEmail: "",
       invoiceDate: new Date().toISOString().split('T')[0],
       dueDate: (() => {
         const date = new Date();
         date.setMonth(date.getMonth() + 1);
         return date.toISOString().split('T')[0];
       })(),
+      
+      // Client Information
+      clientName: "",
+      clientEmail: "",
+      clientAddress: "",
+      clientPhone: "",
+      
+      // Financial Details
+      currency: "USD",
+      taxRate: 0,
+      discountType: "none" as const,
+      discountValue: 0,
+      
+      // Additional Features
+      paymentTerms: "Net 30",
       notes: "",
+      footer: "Thank you for your business!",
+      
+      // Items
       items: [{ description: "", quantity: 1, rate: 0 }],
     },
   });

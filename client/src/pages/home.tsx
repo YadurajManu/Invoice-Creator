@@ -1,7 +1,7 @@
 import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
 import FeaturesSection from "@/components/features-section";
-import InvoiceGenerator from "@/components/invoice-generator";
+import AdvancedInvoiceGenerator from "@/components/advanced-invoice-generator";
 import Footer from "@/components/footer";
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       <Navigation />
       <HeroSection />
       <FeaturesSection />
-      <InvoiceGenerator />
+      <AdvancedInvoiceGenerator />
       
       {/* Enhanced CTA Section */}
       <section className="py-32 relative overflow-hidden">
