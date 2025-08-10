@@ -103,7 +103,3 @@ export type InvoiceItem = typeof invoiceItems.$inferSelect;
 export type InvoiceWithItems = Invoice & {
   items: InvoiceItem[];
 };
-
-export interface InvoiceWithItems extends Invoice {
-  items: InvoiceItem[];
-}

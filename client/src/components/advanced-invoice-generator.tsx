@@ -344,6 +344,83 @@ export default function AdvancedInvoiceGenerator() {
                             </FormItem>
                           )}
                         />
+                        
+                        {/* Logo/E-Signature Upload */}
+                        <FormField
+                          control={form.control}
+                          name="businessLogo"
+                          render={({ field: { onChange, value, ...field } }) => (
+                            <FormItem className="col-span-2">
+                              <FormLabel className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                                <Building size={16} />
+                                Logo / E-Signature
+                              </FormLabel>
+                              <FormControl>
+                                <div className="space-y-4">
+                                  <div className="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:border-primary transition-colors duration-300">
+                                    <Input
+                                      type="file"
+                                      accept="image/*"
+                                      onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) {
+                                          const reader = new FileReader();
+                                          reader.onload = (event) => {
+                                            const result = event.target?.result as string;
+                                            onChange(result);
+                                          };
+                                          reader.readAsDataURL(file);
+                                        }
+                                      }}
+                                      className="hidden"
+                                      id="logo-upload"
+                                      {...field}
+                                    />
+                                    <label htmlFor="logo-upload" className="cursor-pointer">
+                                      <div className="space-y-3">
+                                        {value ? (
+                                          <div className="relative inline-block">
+                                            <img 
+                                              src={value} 
+                                              alt="Logo/Signature preview" 
+                                              className="max-w-40 max-h-24 mx-auto border border-slate-200 rounded-lg object-contain shadow-sm"
+                                            />
+                                            <Button
+                                              type="button"
+                                              variant="outline"
+                                              size="sm"
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                onChange("");
+                                              }}
+                                              className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 bg-red-500 border-red-500 text-white hover:bg-red-600"
+                                            >
+                                              ×
+                                            </Button>
+                                          </div>
+                                        ) : (
+                                          <div className="space-y-2">
+                                            <div className="w-12 h-12 mx-auto bg-slate-100 rounded-xl flex items-center justify-center">
+                                              <Building size={24} className="text-slate-500" />
+                                            </div>
+                                            <div>
+                                              <p className="font-medium text-slate-700">Upload Logo or E-Signature</p>
+                                              <p className="text-sm text-slate-500">PNG, JPG up to 2MB</p>
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </label>
+                                  </div>
+                                  <p className="text-xs text-slate-500 text-center">
+                                    Add your business logo or electronic signature to make invoices more professional
+                                  </p>
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
                     </div>
                   )}
